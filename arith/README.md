@@ -46,7 +46,7 @@ else
 ### Concrete Syntax
 The **arith** interpreter can accept semicolon-delimited terms and **import** statements. Be sure to add a semicolon at the end.
 For example, the following file has a valid concrete syntax.
-```:test4.txt
+```txt:test4.txt
 import "test1.txt";
 import "test2.txt";
 import "test3.txt";

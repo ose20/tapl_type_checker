@@ -166,20 +166,3 @@ and escaped = parse
       }
   | _
       { error (info lexbuf) "Illegal character constant" }
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
