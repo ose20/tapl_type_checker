@@ -7,7 +7,7 @@ This repository is an OCaml reimplementation of the programming language and its
 There are two main reasons for this. First, the [officially distributed
 programs](https://www.cis.upenn.edu/~bcpierce/tapl/) do not work with
 the current version of OCaml, and have other minor bugs. Secondly, I am interested in programming language theory, especially type
-systems, and wanted to implement and study them.
+system, and wanted to implement and study them.
 
 ### Required Environment
 To run the interpreter, which actually evaluates the terms of the defined
