@@ -7,3 +7,4 @@ main
 lexer.ml
 parser.mli
 parser.ml
+parser.output
