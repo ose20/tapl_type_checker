@@ -83,4 +83,6 @@ and printtm_ATerm not_val = function
         | _ -> printtm_ATerm true term
         in aux 1 t1
 
-let printtm t = printtm_Term t
+let printtm t = 
+  printtm_Term t;
+  print_newline ()
