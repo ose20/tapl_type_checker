@@ -20,12 +20,23 @@ module Error = struct
 		print_newline ();
     raise (Exit 1)
 
+  let pr = print_string
   (* info を受け取り，それを文字列にして出力 *)
   let printInfo = function
   | FI (f, l, c) ->
-      printf "@[%s:%d.%d:@ @]@." f l c
+      open_hovbox 0;
+      pr f;
+      pr ":";
+      pr "line";
+      pr (string_of_int l);
+      pr ".";
+      pr (string_of_int c);
+      pr ": ";
+      close_box ()
   | UNKNOWN ->
-      printf "@[<Unknown file and line>:@ @]@."
+      open_hovbox 0;
+      pr "<Unknown file and line>: ";
+      close_box ()
 
   (* info とエラー出力関数をもらって，それらを合成して errf に渡す *)
   let errfAt fi f =

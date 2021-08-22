@@ -52,7 +52,7 @@ let alreadyImported = ref ([] : string list)
 
 (* ファイルの処理とコマンドの処理 *)
 let rec process_file f =
-	if List.men f (!alreadyImported) then ()
+	if List.mem f (!alreadyImported) then ()
 	else (
 		alreadyImported := f :: !alreadyImported;
 		let cmds = parseFile f in

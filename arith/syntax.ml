@@ -15,7 +15,7 @@ type term =
   | TmIsZero of info * term
 
 type command =
-  | Eval of info * string
+  | Eval of info * term
   | Import of string
 
 (* ---------------------------------------------------------------- *)
@@ -54,6 +54,7 @@ let rec printtm_Term = function
 			printtm_Term t3;
 
 			cbox ()
+  | t -> printtm_AppTerm t
 and printtm_AppTerm = function
   | TmPred (_, t1) ->
       obox (); pr "pred ";
@@ -82,6 +83,12 @@ and printtm_ATerm not_val = function
         | TmSucc (_, s) -> aux (n + 1) s
         | _ -> printtm_ATerm true term
         in aux 1 t1
+  | t ->
+      obox ();
+      pr "(";
+      printtm_Term t;
+      pr ")";
+      cbox ()
 
 let printtm t = 
   printtm_Term t;

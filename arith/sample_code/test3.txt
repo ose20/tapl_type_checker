@@ -1,0 +1,21 @@
+/* （もし型システムがあれば)事前に弾きたいような意味のない項 */
+/*  評価できるまでしてから出力する */
+succ (pred (false));
+
+if
+  succ 1
+then
+  if
+    pred 10
+  then
+    iszero (succ (succ 0))
+  else
+    if
+      true
+    then
+      0
+    else
+      4
+else
+  15;
+

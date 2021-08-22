@@ -6,10 +6,14 @@ INCLUDES 		=
 OCAMLFLAGS 		= $(INCLUDES)
 OCAMLOPTFLAGS 	= $(INCLUDES)
 
-OBJS 	= lexer.cmo parser.cmo core.cmo support.cmo syntax.cmo main.cmo
-DEPEND 	= lexer.ml parser.ml
+# OBJS の順番を変えるとコンパイルできなくなることに注意（面倒くさい）
+OBJS 			= support.cmo syntax.cmo core.cmo parser.cmo lexer.cmo main.cmo
+LEXEROBJS = support.cmo support.cmi
+DEPEND 		= lexer.ml parser.ml
 
 all: .depend $(APP)
+
+include .depend
 
 $(APP) : $(OBJS)
 	$(OCAMLC) -o $@ $(OCAMLFLAGS) $(OBJS)
@@ -26,7 +30,7 @@ $(APP) : $(OBJS)
 parser.ml: parser.mly
 	ocamlyacc -v $<
 
-lexer.ml: lexer.mll
+lexer.ml: lexer.mll 
 	ocamllex $<
 
 # Clean up
@@ -41,3 +45,4 @@ clean:
 # Dependencies
 .depend: $(DEPEND)
 	$(OCAMLDEP) $(INCLUDES) *.mli *.ml > .depend
+

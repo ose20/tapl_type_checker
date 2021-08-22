@@ -11,7 +11,7 @@ type term =
   | TmIsZero of info * term
 
 type command =
-  | Eval of info * string
+  | Eval of info * term
   | Import of string
 
 val info_of_tm : term -> info

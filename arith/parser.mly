@@ -17,10 +17,18 @@ open Syntax
 %token <Support.Error.info> ISZERO
 
 /* constant value */
+%token <string Support.Error.withinfo> UCID /* uppercase-initial */
+%token <string Support.Error.withinfo> LCID /* lowercase/symbolic-initial */
 %token <int Support.Error.withinfo> INTV
+%token <string Support.Error.withinfo> STRINGV
+
 
 /* symbolic tokens */
+%token <Support.Error.info> EOF
+%token <Support.Error.info> LPAREN
+%token <Support.Error.info> RPAREN
 %token <Support.Error.info> SEMI
+
 
 /* ------------------------------------------------------------------- */
 
@@ -55,8 +63,8 @@ AppTerm :
       { TmSucc($1, $2) }
   | PRED ATerm
       { TmPred($1, $2) }
-  | ISZERO
-      { TmIzZero($1, $2) }
+  | ISZERO ATerm
+      { TmIsZero($1, $2) }
   | ATerm
       { $1 }
 
@@ -66,9 +74,11 @@ ATerm :
   | FALSE
       { TmFalse($1) }
   | INTV
-    (*  具象構文では 0 以上の自然数リテラルも使えるようにして，
-    **  ここで succ (...) の形に直す *)
+    /*  具象構文では 0 以上の自然数リテラルも使えるようにして，
+      ここで succ (...) の形に直す */
       { let rec normalize = function
         | 0 -> TmZero($1.i)
         | n -> TmSucc($1.i, normalize (n - 1))
-        in f $1.v }
+        in normalize $1.v }
+  | LPAREN Term RPAREN
+			{ $2 }
