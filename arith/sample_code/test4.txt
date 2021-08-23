@@ -1,6 +1,0 @@
-/* import "filename" で他のファイルを読み込んで実行することも可能 */
-import "test1.txt";
-import "test2.txt";
-import "test3.txt";
-iszero (pred (succ 0));
-succ (if true then 2 else 3);
