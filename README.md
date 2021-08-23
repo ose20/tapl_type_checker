@@ -14,4 +14,4 @@ To run the interpreter, which actually evaluates the terms of the defined
 programming language, you need to have OCaml running. You can install OCaml using, for example, [opam](https://ocaml.org/docs/install.html).
 
 ### Contents (now developing)
-1. `arith` (chapters 3-4)
+1. [arith](https://github.com/ose20/tapl_type_checker/tree/main/arith) (chapters 3-4)
