@@ -1,0 +1,4 @@
+succ 16;
+pred 0;
+succ (succ (pred 8));
+pred (pred (pred 2));
