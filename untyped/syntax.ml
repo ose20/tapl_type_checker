@@ -121,4 +121,6 @@ and printtm_ATerm ctx = function
 			printtm_Term ctx t;
 			pr ")";
 			cbox ()
-let printtm ctx t = printtm_Term ctx t
+let printtm ctx t = 
+	printtm_Term ctx t;
+	pr ";"; newline ()
