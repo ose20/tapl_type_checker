@@ -24,6 +24,25 @@ type command =
 let emptycontext : (string list) = []
 let ctxlen (ctx : string list) = List.length ctx
 let addname ctx (x : string) = x :: ctx
+let pickfreshname ctx x =
+	let rec aux x idx =
+		let x' = x ^ (if idx = 0 then "" else string_of_int idx) in
+		if List.mem x' ctx
+		then aux x (idx+1)
+		else (addname ctx x'), x'
+	in aux x 0
+
+let rec name2index fi ctx x =
+	match ctx with
+	| [] -> errsAt fi ("Identifier " ^ x ^ " is unbound")
+	| y :: rest ->
+			if x=y then 0 else 1 + (name2index fi rest x)
+
+let index2name fi ctx n =
+	try List.nth ctx n
+	with Failure _ ->
+		let msg = Printf.sprintf "Variable lookup failure: offset: %d, ctx size %d" n (ctxlen ctx) in
+		errsAt fi msg
 
 (* ------------------------------------------------------------------- *)
 (* Shifting *)
@@ -52,6 +71,10 @@ let substTerm j s t =
 	| TmApp (fi, t1, t2) ->
 			TmApp (fi, walk c t1, walk c t2)
 
+(* beta-reduction of the term (\lambda. t)v *)			
+let betaReduction t v = 
+	shiftTerm -1 (substTerm 0 (shiftTerm 1 v) t)
+
 (* ------------------------------------------------------------------- *)
 (* Extracting file info *)
 
@@ -61,4 +84,41 @@ let info_of_term = function
 	| TmApp (fi, _, _) -> fi
 
 
-	
+(* ------------------------------------------------------------------- *)
+(* Printing *)
+
+let rec printtm_Term ctx = function
+	| TmAbs (_, x, t1) ->
+			let ctx', x' = pickfreshname ctx x in
+			hovbox 2;
+			printf "lambda %s." x';
+			space ();
+			printtm_Term ctx' t1;
+			cbox ()
+	| t -> printtm_AppTerm ctx t
+and printtm_AppTerm ctx = function
+	| TmApp (_, t1, t2) ->
+			hovbox 0;
+			printtm_AppTerm ctx t1;
+			space ();
+			printtm_ATerm ctx t2;
+			cbox ()
+	| t -> printtm_ATerm ctx t	 
+and printtm_ATerm ctx = function
+	| TmVar (fi, x, n) ->
+			if ctxlen ctx = n then
+				hovbox 0;
+				pr (index2name fi ctx x)
+				cbox ()
+			else
+				printf "@[<hov 0>[bad index: %s/%s in {%s}]@]"
+				(string_of_int x) (string_of_int n)
+				(List.fold_left (fun lst elt -> if lst = "" then elt else lst ^ "; " ^ elt)
+				"" ctx)
+	| t ->
+			hovbox 0;
+			pr "(";
+			printtm_Term ctx t;
+			pr ")";
+			cbox ()
+let printtm ctx t = printtm_Term ctx t
