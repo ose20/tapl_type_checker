@@ -12,3 +12,9 @@ containing the **untyped** program to this program.
 searched for running file
 
 ### Example
+You can use the test combinator from Chapter 5 to emulate the if statement. One thing to note is that `untyped` uses a call-by-value strategy, so v and w need to be lambda abstractions to be values.
+```
+$ ./main -I test test3
+
+lam v. v;
+```

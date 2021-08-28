@@ -92,7 +92,7 @@ let rec printtm_Term ctx = function
 	| TmAbs (_, x, t1) ->
 			let ctx', x' = pickfreshname ctx x in
 			hovbox 2;
-			printf "lambda %s." x';
+			printf "lam %s." x';
 			space ();
 			printtm_Term ctx' t1;
 			cbox ()
