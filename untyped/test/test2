@@ -1,0 +1,3 @@
+/*  id (id (lambda z. id z)) -> lambda z. id z  */
+
+(lam x. x)((lam x. x) (lam z. (lam x. x) z));

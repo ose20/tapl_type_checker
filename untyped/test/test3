@@ -1,0 +1,7 @@
+/* 
+  tru = \t. \f. t
+  fls = \t. \f. f
+  test = \l. \m. \n. l m n
+*/
+
+(lam l. lam m. lam n. l m n) (lam t. lam f. t) (lam v. v) (lam w. w);

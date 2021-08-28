@@ -1,0 +1,3 @@
+bind x;
+lam x. x;
+lam y. x y;

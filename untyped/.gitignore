@@ -1,0 +1,7 @@
+.DS_Store
+main
+*.cm[iox]
+lexer.ml
+parser.mli
+parser.ml
+parser.output

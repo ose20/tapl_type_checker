@@ -70,10 +70,11 @@ let substTerm j s t =
 			TmAbs (fi, str, walk (c+1) t1)
 	| TmApp (fi, t1, t2) ->
 			TmApp (fi, walk c t1, walk c t2)
+	in walk 0 t
 
 (* beta-reduction of the term (\lambda. t)v *)			
 let betaReduction t v = 
-	shiftTerm -1 (substTerm 0 (shiftTerm 1 v) t)
+	shiftTerm (-1) (substTerm 0 (shiftTerm 1 v) t)
 
 (* ------------------------------------------------------------------- *)
 (* Extracting file info *)
@@ -107,9 +108,9 @@ and printtm_AppTerm ctx = function
 and printtm_ATerm ctx = function
 	| TmVar (fi, x, n) ->
 			if ctxlen ctx = n then
-				hovbox 0;
-				pr (index2name fi ctx x)
-				cbox ()
+				(hovbox 0;
+				pr (index2name fi ctx x);
+				cbox ())
 			else
 				printf "@[<hov 0>[bad index: %s/%s in {%s}]@]"
 				(string_of_int x) (string_of_int n)

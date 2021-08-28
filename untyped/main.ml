@@ -4,8 +4,14 @@ open Support.Pervasive
 open Syntax
 open Core
 
+(* ----------------------------------------------------------------------- *)
+(* mutable cell *)
+
 let searchpath = ref [""]
 let alreadyImported = ref ([] : string list)
+
+(* ----------------------------------------------------------------------- *)
+
 
 let argdef = [
 	"-I",
@@ -13,16 +19,15 @@ let argdef = [
 	"Append a dirctory to the search paht"
 ]
 
-
 let parseArgs () =
 	let file = ref (None : string option) in
 	Arg.parse argdef (fun s ->
-		match file with
+		match !file with
 		| Some _ -> errs "You must specify exactly one input file"
 		| None -> file := Some s) "";
 	match !file with
 	| None -> errs "You must specify an input file"
-	| Some s ->s
+	| Some s -> s
 
 let openfile file =
 	let rec trynext = function
@@ -45,13 +50,13 @@ let parseFile file =
 let rec processFile file ctx =
 	if List.mem file !alreadyImported then ctx else
 	let (cmds, _) = parseFile file ctx in
-	List.fold_left (fun (ctx, cmd) -> processCommand ctx cmd) ctx cmds
+	List.fold_left (fun ctx cmd -> processCommand ctx cmd) ctx cmds
 and processCommand ctx = function
 	| Import(f) ->
 			processFile f ctx
 	| Eval(fi, t) ->
 			let t' = eval t in
-			printtm t'; ctx
+			printtm ctx t'; ctx
 	| Bind(fi, str) ->
 			printf "@[<hov 0>Bind %s;@]@." str;
 			addname ctx str
