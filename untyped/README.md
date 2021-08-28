@@ -21,7 +21,7 @@ reduces to
 ```
 lam v. v
 ```
-To actually do it and see for yourself, just run the following command
+To actually do it and see for yourself, just run the following command.
 ```
 $ ./main -I test test3
 
