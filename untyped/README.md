@@ -13,6 +13,7 @@ searched for running file
 
 ### Example
 You can use the test combinator from Chapter 5 to emulate the if statement. One thing to note is that `untyped` uses a call-by-value strategy, so v and w need to be lambda abstractions to be values.
+That is, `(lam l. lam m. lam n. l m n) (lam t. lam f. t) (lam v. v) (lam w. w)` reduces to `lam v. v`
 ```
 $ ./main -I test test3
 
