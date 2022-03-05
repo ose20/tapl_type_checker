@@ -33,7 +33,7 @@ The syntax of tyarith is defined as follows.
 ```
 <toplevel>  ::= EOF | <command> ; <toplevel>
 
-<command>   ::= import `string` | <term>
+<command>   ::= import $(string) | <term>
 
 <term>      ::= if <term> then <term> else <term>
               | <appTerm>
@@ -41,5 +41,6 @@ The syntax of tyarith is defined as follows.
 <appTerm>   ::= succ <appTerm> | pred <appTerm> 
               | iszero <appTerm> | <aTerm>
 
-<aTerm>     ::= true | false | `natural number` | ( <term> )
+<aTerm>     ::= true | false | $(natural number) | ( <term> )
 ```
+Note that $(string) is a metavariable on the set of strings and $(natural number) is a metavariable on the set of natural numbers.
