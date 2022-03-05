@@ -12,7 +12,7 @@ searched for running file
 
 ### Example
 To run the following test code,
-```:sample1.txt
+```ruby:sample1.txt
 0;
 pred 0;
 succ succ succ pred (succ 0);
