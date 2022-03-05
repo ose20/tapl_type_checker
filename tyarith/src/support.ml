@@ -10,7 +10,7 @@ module Error = struct
   let createInfo f l c = FI(f, l, c)
 
   let errf f =
-    open_hovbox 0; f(); close_box(); print_newline();
+    open_vbox 0; f(); close_box(); print_newline();
     raise (Exit 1)
 
   (* pr : このライブラリの中でのみ使う補助関数 *)
@@ -26,7 +26,6 @@ module Error = struct
         pr (string_of_int l);
         pr ".";
         pr (string_of_int c);
-        pr (string_of_int c);
         pr ": ";
         close_box()
     | UNKNOWN ->
@@ -34,7 +33,7 @@ module Error = struct
         pr "<Unknown file and line>: ";
         close_box ()
 
-  let errfAt fi f = errf(fun () -> printInfo fi; f())
+  let errfAt fi f = errf(fun () -> printInfo fi; print_space(); f())
   let err s = errf (fun () -> print_string "Error: "; print_string s; print_newline())
   let error fi s = errfAt fi (fun () -> print_string s)
   let warning s = 

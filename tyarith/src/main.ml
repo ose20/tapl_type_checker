@@ -76,6 +76,9 @@ let main () =
   let inFile = parseArgs () in 
   process_file inFile
 
+let () = set_max_boxes 1000
+let () = set_margin 67
+
 let _ =
   let res = Printexc.catch (fun () ->
     try main (); 0

@@ -47,7 +47,8 @@ let create inFile stream =
   else filename := Filename.concat (Sys.getcwd()) inFile;
   lineno := 1; start := 0; Lexing.from_channel stream
 
-let newline lexbuf = incr lineno; start := (Lexing.lexeme_start lexbuf)
+let newline lexbuf = 
+  incr lineno; start := (Lexing.lexeme_start lexbuf)
 (* info : Lexing.lexbuf -> Support.Error.info *)
 let info lexbuf =
   createInfo (!filename) (!lineno) (Lexing.lexeme_start lexbuf - !start)
@@ -88,7 +89,7 @@ let symbol = [';' '(' ')']
 rule main = parse
   | [' ' '\t']+
       { main lexbuf }
-  | "\n"
+  | [' ' '\t']*"\n"
       { newline lexbuf; main lexbuf }
   | "*/"
       { error (info lexbuf) "Unmatiched end of comment" }
@@ -137,7 +138,7 @@ and escaped = parse
   | '\\'
       { '\\' }
   | '"'
-      { '\034'}
+      { '\034' }
   | '\''
       { '\'' }
   | ['0'-'9']['0'-'9']['0'-'9']
@@ -147,3 +148,5 @@ and escaped = parse
         else
           Char.chr x
       }
+  | [^ '"' '\\' 't' 'n' '\'']
+      { error (info lexbuf) "Illegal character constant"}
