@@ -22,3 +22,5 @@ programming language, you need to have OCaml running. You can install OCaml usin
 1. [arith](https://github.com/ose20/tapl_type_checker/tree/main/arith) (chapters 3-4)
 2. [untyped](https://github.com/ose20/tapl_type_checker/tree/main/untyped)
 (chapters 5-7)
+3. [tyarith](https://github.com/ose20/tapl_type_checker/tree/main/tyarith)
+(chapter 8)
