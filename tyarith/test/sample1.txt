@@ -1,0 +1,5 @@
+0;
+pred 0;
+succ succ succ pred (succ 0);
+if false then false else true;
+if if iszero 0 then false else true then succ 2 else pred 2;

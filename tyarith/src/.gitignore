@@ -1,0 +1,5 @@
+memo.txt
+.depend
+*.cmi
+*.cmo
+main
