@@ -1,3 +1,4 @@
+open Tyarith
 open Format
 open Support.Pervasive
 open Support.Error

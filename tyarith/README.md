@@ -4,7 +4,7 @@
 This implementation corresponds to the system of typed boolean and number calculations that appeared in Chapter 8 of TaPL.
 
 ### Build
-To build, just run `make`. Pass only one file containing the **arith** program to the resulting file named main.
+To build, just run `dune build`. Pass only one file containing the **arith** program to the resulting file named main.
 
 ### Command-line option
 - `-I directory`: Add the given directory to the list of directories
@@ -21,7 +21,7 @@ if if iszero 0 then false else true then succ 2 else pred 2;
 ```
 Do the following
 ```
-$ ./main -I ../test sample1.txt
+$ dune exec tyarith -- -I sample sample1.txt
 0 : Nat
 0 : Nat
 3 : Nat
