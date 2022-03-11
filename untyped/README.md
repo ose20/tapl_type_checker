@@ -4,7 +4,7 @@ This is an interpreter for pure untyped lambda-calculus `untyped`.
 The relevant TaPL chapters are Charpters 5-7.
 
 ### Build
-Just run the `make` to generate the `main` program. Pass only one file
+Just run the `dune build`. And then, pass only one file
 containing the **untyped** program to this program.
 
 ### Command-line option
@@ -23,7 +23,7 @@ lam v. v
 ```
 To actually do it and see for yourself, just run the following command.
 ```
-$ ./main -I test test3
+$ dune exec ./main.exe -- -I test test3
 
 lam v. v;
 ```
