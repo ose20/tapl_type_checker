@@ -2,6 +2,7 @@
 .vscode
 official_arith
 format_exercise
+_build
 main
 *.cm[iox]
 lexer.ml
