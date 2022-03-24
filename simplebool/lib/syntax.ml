@@ -50,16 +50,16 @@ let rec pick_fresh_name ctx x =
 
 
 (* context の x 番目の変数（文字列）を取り出す *)
-let (index2name : info -> context -> int -> string) 
-  = fun fi ctx x ->
-    try
-      let (xn, _) = List.nth ctx x in xn
-    with Failure _ ->
-      let msg = 
-        Printf.sprintf "Variable lookup failure: offset: %d, ctx size: %d"
-      in errs_at fi (msg x (ctx_len ctx))
+let index2name = fun fi ctx x ->
+  try
+    let (xn, _) = List.nth ctx x in xn
+  with Failure _ ->
+    let msg = 
+      Printf.sprintf "Variable lookup failure: offset: %d, ctx size: %d"
+    in errs_at fi (msg x (ctx_len ctx))
 
 
+(* context において 変数 x を 名無し表現にする *)
 let rec name2index = fun fi ctx x ->
   match ctx with
     | [] -> errs_at fi ("Identifier " ^ x ^ " is unbound")
@@ -122,6 +122,30 @@ let info_of_term = function
   | TmTrue fi -> fi
   | TmFalse fi -> fi
   | TmIf (fi,_,_,_) -> fi
+
+(* typing *)
+let rec typeof ctx = function
+  | TmVar(fi,i,_) -> get_type_from_context fi ctx i
+  | TmAbs(_,x,tyT1,t2) ->
+      let ctx' = add_binding ctx x (VarBind(tyT1)) in
+      let tyT2 = typeof ctx' t2 in
+      TyArr(tyT1, tyT2)
+  | TmApp(fi,t1,t2) ->
+      let tyT1 = typeof ctx t1 in
+      let tyT2 = typeof ctx t2 in
+      (match tyT1 with
+        | TyArr(tyT11,tyT12) ->
+          if (=) tyT2 tyT11 then tyT12
+          else errs_at fi "parameter type mismatch"
+        | _ -> errs_at fi "arrow type expected")
+  | TmTrue(_) -> TyBool
+  | TmFalse(_) -> TyBool
+  | TmIf(fi,t1,t2,t3) ->
+      if (=) (typeof ctx t1) TyBool then
+        let tyT2 = typeof ctx t2 in
+        if (=) tyT2 (typeof ctx t3) then tyT2
+        else errs_at fi "arms of conditional have different types"
+      else errs_at fi "guard of conditional not a boolean"
 
 
 (* Printing *)
@@ -188,6 +212,17 @@ and printtm_a_term outer ctx = function
 
 let printtm ctx t = printtm_term true ctx t
 
+(* print term and its type *)
+let print_tmty ctx t =
+  open_hvbox 0;
+  printtm ctx t;
+  break 1 2;
+  pr ": ";
+  printty @@ typeof ctx t;
+  print_newline();
+  close_box()
+
+
 let prbinding = function
   | NameBind -> ()
   | VarBind (tyT) -> pr ": "; printty tyT
@@ -223,27 +258,5 @@ let rec eval t =
   try let t' = eval1 t in eval t'
   with NoRuleApplies -> t
 
-(* typing *)
-let rec typeof ctx = function
-  | TmVar(fi,i,_) -> get_type_from_context fi ctx i
-  | TmAbs(_,x,tyT1,t2) ->
-      let ctx' = add_binding ctx x (VarBind(tyT1)) in
-      let tyT2 = typeof ctx' t2 in
-      TyArr(tyT1, tyT2)
-  | TmApp(fi,t1,t2) ->
-      let tyT1 = typeof ctx t1 in
-      let tyT2 = typeof ctx t2 in
-      (match tyT1 with
-        | TyArr(tyT11,tyT12) ->
-          if (=) tyT2 tyT11 then tyT12
-          else errs_at fi "parameter type mismatch"
-        | _ -> errs_at fi "arrow type expected")
-  | TmTrue(_) -> TyBool
-  | TmFalse(_) -> TyBool
-  | TmIf(fi,t1,t2,t3) ->
-      if (=) (typeof ctx t1) TyBool then
-        let tyT2 = typeof ctx t2 in
-        if (=) tyT2 (typeof ctx t3) then tyT2
-        else errs_at fi "arms of conditional have different types"
-      else errs_at fi "guard of conditional not a boolean"
+
 

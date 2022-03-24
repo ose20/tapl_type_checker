@@ -24,9 +24,6 @@ let parse_args () =
     | None -> errs "You must specify an input file"
     | Some s -> s
 
-let prbindingty = function
-  | NameBind -> ()
-  | VarBind(tyT) -> pr ": "; printty tyT
 
 let open_file in_file =
   let rec try_next = function
@@ -46,30 +43,23 @@ let parse_file in_file =
   in
   Parsing.clear_parser(); close_in in_ch; result
 
+let process_bind ctx x bind =
+  open_hvbox 0;
+  let (_, x') = pick_fresh_name ctx x in
+  pr x'; pr " "; prbinding bind;
+  print_newline ();
+  close_box();
+  add_binding ctx x' bind
+
 let rec process_command ctx = function
   | Import(f) ->
-      let _ = process_file f ctx in
-      ctx
+      let _ = process_file f ctx in ctx
   | Eval(_,t) ->
-      let tyT = typeof ctx t in
       let t' = eval t in
-      open_hvbox 0;
-      printtm ctx t';
-      break 1 2;
-      pr ": ";
-      printty tyT;
-      print_newline();
-      close_box();
+      print_tmty ctx t';
       ctx
   | Bind(_,x,bind) ->
-      open_hvbox 0;
-      let (_, x') = pick_fresh_name ctx x in
-      pr x'; pr " "; prbindingty bind;
-      print_newline();
-      close_box();
-      let ctx' = add_binding ctx x' bind in
-      (* print_endline @@ string_of_int @@ ctx_len ctx'; *)
-      ctx'
+      process_bind ctx x bind
 
 and process_file f ctx =
   if List.mem f (!already_imported) then ctx

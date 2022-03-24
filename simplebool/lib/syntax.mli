@@ -37,6 +37,7 @@ val info_of_term : term -> info
 
 val printty : ty -> unit
 val printtm : context -> term -> unit
+val print_tmty : context -> term -> unit
 val prbinding : binding -> unit
 
 
