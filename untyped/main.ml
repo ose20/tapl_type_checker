@@ -53,7 +53,7 @@ let rec processFile file ctx =
 	List.fold_left (fun ctx cmd -> processCommand ctx cmd) ctx cmds
 and processCommand ctx = function
 	| Import(f) ->
-			processFile f ctx
+			let _ = processFile f ctx in ctx
 	| Eval(fi, t) ->
 			let t' = eval t in
 			printtm ctx t'; ctx

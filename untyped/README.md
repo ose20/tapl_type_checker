@@ -27,3 +27,21 @@ $ dune exec ./main.exe -- -I test test3
 
 lam v. v;
 ```
+
+### Fix bug(?) in official implementation 
+There are things in the official implementation(https://www.cis.upenn.edu/~bcpierce/tapl/) that seem to be bugs.
+The official version had a bug that the program does not work properly when importing a file that binds variables. For example, suppose you have sample4.txt 
+```
+y /;
+```
+and sample5.txt.
+```
+import "sample4.txt";
+lambda x.x;
+```
+Now, when sample5.txt is executed, the lambda term is not evaluated correctly as shown below.
+```
+y
+(lambda x. [bad index: 0/1 in { x y }])
+```
+In my implementation, these problems have been resolved.
