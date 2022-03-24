@@ -93,7 +93,7 @@ let term_subst_top s t =
 
 
 (* Context management *)
-let rec get_binding fi ctx i =
+let get_binding fi ctx i =
   try
     let (_,bind) = List.nth ctx i in bind
   with Failure _ ->
@@ -188,7 +188,7 @@ let prbinding = function
 
 
 (* evaluation *)
-let rec isval = function
+let isval = function
   | TmTrue(_) -> true
   | TmFalse(_) -> true
   | TmAbs(_,_,_,_) -> true

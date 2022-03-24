@@ -17,7 +17,3 @@
    %{workspace_root}
    (run %{bin:ocamlyacc} %{deps}))))
 
-(env
- (dev
-  (flags
-   (:standard -warn-error -a))))

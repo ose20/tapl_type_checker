@@ -1,6 +1,5 @@
 %{
 open Support.Error
-open Support.Pervasive
 open Syntax
 %}
 
@@ -66,7 +65,7 @@ ArrowType :
   | AType { $1 }
 
 AType :
-  | BOOL { fun ctx -> TyBool }
+  | BOOL { fun _ -> TyBool }
   | LPAREN Type RPAREN { $2 }
 
 
@@ -97,5 +96,5 @@ ATerm :
   | LCID
       { fun ctx ->
           TmVar($1.i, name2index $1.i ctx $1.v, ctx_len ctx) }
-  | TRUE { fun ctx -> TmTrue($1) }
-  | FALSE { fun ctx -> TmFalse($1) }
+  | TRUE { fun _ -> TmTrue($1) }
+  | FALSE { fun _ -> TmFalse($1) }
