@@ -1,0 +1,2 @@
+lam _:Bool->Bool. true;
+lam _:Bool. false;

@@ -1,0 +1,5 @@
+lam x:Bool.x;
+(lam x:Bool.x) true;
+(lam f:Bool->Bool. lam x:Bool. f x);
+(lam f:Bool->Bool. lam x:Bool. f x)
+  (lam x:Bool. if x then false else true) false;

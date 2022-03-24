@@ -1,0 +1,8 @@
+/* Example of when a name conflict occurs */
+
+(lam x:Bool. 
+  (lam x:Bool->Bool. x true) 
+  (lam x:Bool. true)
+);
+
+(lam x:Bool->Bool.x) (lam x:Bool.x);
