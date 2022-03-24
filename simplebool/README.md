@@ -21,7 +21,7 @@ lam x:Bool.x;
 ```
 Do the following
 ```
-$ dune exec tyarith -- -I sample 1.txt
+$ dune exec tyarith -- -I sample sample1.txt
 \x:Bool. x : Bool -> Bool
 true : Bool
 \f:Bool->Bool. \x:Bool. f x : (Bool->Bool) -> Bool -> Bool

@@ -24,3 +24,4 @@ programming language, you need to have OCaml running. You can install OCaml usin
 (chapters 5-7)
 3. [tyarith](https://github.com/ose20/tapl_type_checker/tree/main/tyarith)
 (chapter 8)
+4. [simplebool](https://github.com/ose20/tapl_type_checker/tree/main/simplebool)(chapter 9)
