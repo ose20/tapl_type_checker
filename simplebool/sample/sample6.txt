@@ -1,2 +1,2 @@
-x:Bool;
-x;
+import "sample4.txt";
+lam x:Bool. x;

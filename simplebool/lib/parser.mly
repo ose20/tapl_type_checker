@@ -33,6 +33,11 @@ open Syntax
   /* Special compound symbols */
 %token <Support.Error.info> ARROW
 
+/*
+  TmVar of info * int * int
+  の int の部分に ctx が必要になるので引数にとっている
+*/
+
 %start toplevel
 %type <Syntax.context -> (Syntax.command list * Syntax.context)> toplevel
 %%

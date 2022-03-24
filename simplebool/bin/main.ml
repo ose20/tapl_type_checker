@@ -48,7 +48,8 @@ let parse_file in_file =
 
 let rec process_command ctx = function
   | Import(f) ->
-      process_file f ctx
+      let _ = process_file f ctx in
+      ctx
   | Eval(_,t) ->
       let tyT = typeof ctx t in
       let t' = eval t in
@@ -67,7 +68,7 @@ let rec process_command ctx = function
       print_newline();
       close_box();
       let ctx' = add_binding ctx x' bind in
-      print_endline @@ string_of_int @@ ctx_len ctx';
+      (* print_endline @@ string_of_int @@ ctx_len ctx'; *)
       ctx'
 
 and process_file f ctx =

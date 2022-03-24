@@ -1,4 +1,6 @@
+/* 
+  Example of error. Variables bound in other files can't be used.
+*/
+
 import "sample4.txt";
-y : Bool;
-y : Bool;
-lam y:Bool. lam y:Bool. y;
+y;
