@@ -62,10 +62,13 @@ let rec process_command ctx = function
       ctx
   | Bind(_,x,bind) ->
       open_hvbox 0;
-      pr x; pr " "; prbindingty bind;
+      let (_, x') = pick_fresh_name ctx x in
+      pr x'; pr " "; prbindingty bind;
       print_newline();
       close_box();
-      add_binding ctx x bind
+      let ctx' = add_binding ctx x' bind in
+      print_endline @@ string_of_int @@ ctx_len ctx';
+      ctx'
 
 and process_file f ctx =
   if List.mem f (!already_imported) then ctx
@@ -73,13 +76,7 @@ and process_file f ctx =
     begin
       already_imported := f :: !already_imported;
       let cmds, _ = parse_file f ctx in
-      let g ctx c =
-        open_hvbox 0;
-        let results = process_command ctx c in
-        close_box();
-        results
-      in
-      List.fold_left g ctx cmds
+      List.fold_left (fun ctx cmd -> process_command ctx cmd) ctx cmds
     end
 
 let main () =

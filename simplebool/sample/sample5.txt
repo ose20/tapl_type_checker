@@ -1,0 +1,4 @@
+import "sample4.txt";
+y : Bool;
+y : Bool;
+lam y:Bool. lam y:Bool. y;

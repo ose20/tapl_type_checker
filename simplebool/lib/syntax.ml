@@ -20,6 +20,8 @@ type binding =
   | NameBind
   | VarBind of ty
 
+
+(* 変数の名前とその型の組みのリスト *)
 type context = (string * binding) list
 
 type command = 
@@ -29,7 +31,7 @@ type command =
 
 
 (* Context management *)
-let empty_context = []
+let (empty_context : (string * binding) list) = []
 
 let ctx_len = List.length
 let add_binding ctx x bind = (x,bind) :: ctx
@@ -46,15 +48,19 @@ let rec pick_fresh_name ctx x =
   if is_name_bound ctx x then pick_fresh_name ctx (x^"'")
   else ((x,NameBind)::ctx, x)
 
-let index2name fi ctx x =
-  try
-    let (xn, _) = List.nth ctx x in xn
-  with Failure _ ->
-    let msg = 
-      Printf.sprintf "Variable lookup failure: offset: %d, ctx size: %d"
-    in errs_at fi (msg x (ctx_len ctx))
 
-let rec name2index fi ctx x =
+(* context の x 番目の変数（文字列）を取り出す *)
+let (index2name : info -> context -> int -> string) 
+  = fun fi ctx x ->
+    try
+      let (xn, _) = List.nth ctx x in xn
+    with Failure _ ->
+      let msg = 
+        Printf.sprintf "Variable lookup failure: offset: %d, ctx size: %d"
+      in errs_at fi (msg x (ctx_len ctx))
+
+
+let rec name2index = fun fi ctx x ->
   match ctx with
     | [] -> errs_at fi ("Identifier " ^ x ^ " is unbound")
     | (y, _)::rest ->
