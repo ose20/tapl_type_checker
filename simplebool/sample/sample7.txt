@@ -1,3 +1,5 @@
+/* \n
+*/
 x : Bool;
-x : Bool;
+x : Boolj;
 lam y:Bool. x;
