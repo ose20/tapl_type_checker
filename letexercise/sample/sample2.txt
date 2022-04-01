@@ -1,0 +1,6 @@
+(lam _:Bool. 
+  (lam x:Bool->Bool. x true) 
+  (lam _:Bool. true)
+);;
+
+(lam x:Bool->Bool.x) (lam x:Bool.x);;

@@ -1,0 +1,12 @@
+true;;
+false;;
+
+let f = lam x:Bool. if x then false else true in f false;;
+
+let app = lam f:Bool -> Bool. lam x:Bool. f x in
+let f = lam x:Bool. if x then false else true in
+let x = true in
+app f x;;
+
+
+lam f:Bool -> Bool. lam x:Bool. f x;;
