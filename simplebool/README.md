@@ -4,7 +4,7 @@
 This implementation corresponds to simply typed lambda-calculus that appeared in Chapter 9 of TaPL.
 
 ### Build
-To build, just run `dune build`. Pass only one file containing the **arith** program to the resulting file named main.
+To build, just run `dune build`. 
 
 ### Command-line option
 - `-I directory`: Add the given directory to the list of directories
