@@ -3,4 +3,5 @@ _build
 fullsimple
 */official*
 .vscode
-
+.schedule.txt
+recon
