@@ -31,7 +31,7 @@ lam f:Bool -> Bool. lam x:Bool. f x;;
 ```
 Do the following
 ```
-$ dune exec letexercise -- -I sample sample1.txt
+$ dune exec recon -- -I sample sample1.txt
 \x.if x then true else false : Bool -> Bool
 \x.x : ?X1 -> ?X1
 \x:A.3 : A -> Nat
