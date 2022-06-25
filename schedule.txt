@@ -1,4 +1,0 @@
-1. recon
-2. fullsimple
-3. fullrecon
-4. fullequirec, fullsorec (recursive type)
