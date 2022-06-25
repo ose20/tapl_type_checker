@@ -1,0 +1,11 @@
+lam x. if x then true else false;;
+
+lam x.x;;
+
+lam x:A.3;;
+
+let x = 3 in
+let a = x in succ a;;
+
+let f = lam x.x in
+let a = f true in f 5;;

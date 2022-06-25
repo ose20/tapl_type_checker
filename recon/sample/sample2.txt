@@ -1,0 +1,5 @@
+
+succ (succ 8);;
+
+let f = lam f. lam x. f x in
+f (lam x. succ x) 100;;
